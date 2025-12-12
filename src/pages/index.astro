@@ -84,7 +84,7 @@ const featuredProjects = (await getCollection("projects"))
                         </div>
                     </div>
 
-                    <div class="columns is-multiline">
+                    <div class="columns is-3by1">
                         {featuredProjects.map((project) => (
                             <div class="column is-half-tablet is-half-desktop">
                                 <ProjectCard project={project} />

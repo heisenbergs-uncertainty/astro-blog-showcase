@@ -1,13 +1,28 @@
 ---
+
 ---
-<nav class="navbar is-fixed-top is-glass" role="navigation" aria-label="main navigation">
+
+<nav
+    class="navbar is-fixed-top is-glass"
+    role="navigation"
+    aria-label="main navigation"
+>
     <div class="container">
         <div class="navbar-brand">
-            <a class="navbar-item has-text-weight-bold is-size-4 has-text-primary" href="/">
-                &lt;DevProfile /&gt;
+            <a
+                class="navbar-item has-text-weight-bold is-size-4 has-text-primary"
+                href="/"
+            >
+                &lt;matthew-reed-holden/&gt;
             </a>
 
-            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <a
+                role="button"
+                class="navbar-burger"
+                aria-label="menu"
+                aria-expanded="false"
+                data-target="navbarBasicExample"
+            >
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
@@ -16,15 +31,9 @@
 
         <div id="navbarBasicExample" class="navbar-menu">
             <div class="navbar-end">
-                <a href="/" class="navbar-item">
-                    Home
-                </a>
-                <a href="/portfolio" class="navbar-item">
-                    Portfolio
-                </a>
-                <a href="/blog" class="navbar-item">
-                    Blog
-                </a>
+                <a href="/" class="navbar-item"> Home </a>
+                <a href="/portfolio" class="navbar-item"> Portfolio </a>
+                <a href="/blog" class="navbar-item"> Blog </a>
                 <div class="navbar-item">
                     <div class="buttons">
                         <a href="#contact" class="button is-primary">
@@ -39,16 +48,19 @@
 
 <script>
     // Mobile menu toggle
-    document.addEventListener('DOMContentLoaded', () => {
-        const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-        
-        $navbarBurgers.forEach( el => {
-            el.addEventListener('click', () => {
+    document.addEventListener("DOMContentLoaded", () => {
+        const $navbarBurgers = Array.prototype.slice.call(
+            document.querySelectorAll(".navbar-burger"),
+            0,
+        );
+
+        $navbarBurgers.forEach((el) => {
+            el.addEventListener("click", () => {
                 const target = el.dataset.target;
                 const $target = document.getElementById(target);
-                
-                el.classList.toggle('is-active');
-                if ($target) $target.classList.toggle('is-active');
+
+                el.classList.toggle("is-active");
+                if ($target) $target.classList.toggle("is-active");
             });
         });
     });
