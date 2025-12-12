@@ -28,3 +28,6 @@ coverage/
 jest.config.js
 playwright-report/
 test-results/
+
+# deployment
+.netlify/
