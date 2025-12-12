@@ -4,7 +4,7 @@ description: "A production-grade Helm chart for deploying TimescaleDB on Kuberne
 pubDate: "2024-10-15"
 tags: ["Favorite", "Kubernetes", "Database", "DevOps"]
 stack: ["Helm", "Kubernetes", "PostgreSQL"]
-heroImage: "/src/assets/projects/tiger-data-yellow.svg"
+heroImage: "../../assets/projects/tiger-data-yellow.svg"
 repoUrl: "https://github.com/heisenbergs-uncertainty/helm-charts/tree/master/charts/timescaledb"
 ---
 
