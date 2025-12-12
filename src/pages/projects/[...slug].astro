@@ -1,5 +1,6 @@
 ---
 import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
 import Layout from "../../layouts/Layout.astro";
 
 export async function getStaticPaths() {
@@ -26,7 +27,7 @@ const { Content } = await project.render();
             >
                 {
                     project.data.heroImage && (
-                        <img
+                        <Image
                             width={1020}
                             height={510}
                             src={project.data.heroImage}
