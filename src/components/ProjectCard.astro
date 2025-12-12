@@ -9,35 +9,33 @@ interface Props {
 const { project } = Astro.props;
 ---
 
-<div class="card glass-panel h-100">
+<div
+    class="glass-panel h-full flex flex-col rounded-xl overflow-hidden card-hover group"
+>
     {
         project.data.heroImage && (
-            <div class="card-image px-5">
-                <figure class="image is-2by1">
+            <div class="p-5 pb-0">
+                <figure class="aspect-video w-full rounded-lg overflow-hidden relative">
                     <Image
                         src={project.data.heroImage}
                         alt={project.data.title}
-                        width={600}
-                        height={300}
-                        style="object-fit: fit; height: 100%; width: 100%;"
+                        width={400}
+                        height={200}
+                        class="object-fill w-full h-full"
                     />
                 </figure>
             </div>
         )
     }
-    <div class="card-content">
-        <a
-            href={`/projects/${project.slug}`}
-            class="is-block"
-            style="text-decoration: none; color: inherit;"
-        >
-            <div class="mb-4">
+    <div class="p-6 flex-grow flex flex-col">
+        <a href={`/projects/${project.slug}`} class="block mb-4">
+            <div>
                 <p
-                    class="title is-4 has-text-primary group-hover:has-text-link transition-colors"
+                    class="text-2xl font-bold text-[var(--color-primary)] group-hover:text-[var(--color-link)] transition-colors mb-1"
                 >
                     {project.data.title}
                 </p>
-                <p class="subtitle is-6 has-text-grey-light">
+                <p class="text-sm text-gray-400 mb-4">
                     <time datetime={project.data.pubDate.toISOString()}>
                         {
                             project.data.pubDate.toLocaleDateString("en-us", {
@@ -49,14 +47,14 @@ const { project } = Astro.props;
                     </time>
                 </p>
 
-                <div class="content mb-4">
+                <div class="text-gray-300 mb-4 line-clamp-3">
                     {project.data.description}
                 </div>
 
-                <div class="tags">
+                <div class="flex flex-wrap gap-2 mt-auto">
                     {
                         project.data.stack.map((tech) => (
-                            <span class="tag is-primary is-light is-rounded">
+                            <span class="px-3 py-1 bg-[var(--color-primary)]/10 text-[var(--color-primary)] border border-[var(--color-primary)]/20 rounded-full text-xs font-medium">
                                 {tech}
                             </span>
                         ))
@@ -64,56 +62,45 @@ const { project } = Astro.props;
                 </div>
             </div>
         </a>
-
-        <footer
-            class="card-footer"
-            style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: auto;"
-        >
-            {
-                project.data.projectUrl && (
-                    <a
-                        href={project.data.projectUrl}
-                        class="card-footer-item has-text-white"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Live Demo
-                    </a>
-                )
-            }
-            {
-                project.data.repoUrl && (
-                    <a
-                        href={project.data.repoUrl}
-                        class="card-footer-item has-text-white"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style="display: flex; align-items: center; gap: 0.5rem;"
-                    >
-                        <span class="icon is-small">
-                            <svg
-                                role="img"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor"
-                            >
-                                <title>GitHub</title>
-                                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-                            </svg>
-                        </span>
-                        <span>GitHub</span>
-                    </a>
-                )
-            }
-        </footer>
     </div>
-</div>
 
-<style>
-    .h-100 {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }
-</style>
+    <footer
+        class="border-t border-white/10 flex divide-x divide-white/10 bg-black/20"
+    >
+        {
+            project.data.projectUrl && (
+                <a
+                    href={project.data.projectUrl}
+                    class="flex-1 flex items-center justify-center py-3 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-colors"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Live Demo
+                </a>
+            )
+        }
+        {
+            project.data.repoUrl && (
+                <a
+                    href={project.data.repoUrl}
+                    class="flex-1 flex items-center justify-center py-3 text-sm font-medium text-gray-300 hover:text-white hover:bg-white/5 transition-colors gap-2"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <span class="w-4 h-4">
+                        <svg
+                            role="img"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                        >
+                            <title>GitHub</title>
+                            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+                        </svg>
+                    </span>
+                    <span>GitHub</span>
+                </a>
+            )
+        }
+    </footer>
+</div>

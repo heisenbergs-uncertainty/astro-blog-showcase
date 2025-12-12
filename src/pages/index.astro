@@ -22,42 +22,54 @@ const featuredProjects = (await getCollection("projects"))
     <Hero />
 
     <!-- Brief About / Skills Section -->
-    <section class="section">
-        <div class="container">
-            <div class="columns is-multiline is-centered">
-                <div class="column is-4">
-                    <div class="card glass-panel h-100">
-                        <div class="card-content">
-                            <h3 class="title is-4 has-text-primary">
+    <section class="py-16 md:py-24">
+        <div class="max-w-7xl mx-auto px-4 md:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div
+                        class="glass-panel h-full p-8 rounded-xl border border-[var(--color-glass-border)]"
+                    >
+                        <div>
+                            <h3
+                                class="text-xl font-bold text-[var(--color-primary)] mb-2"
+                            >
                                 Engineering
                             </h3>
-                            <p class="subtitle is-6">
+                            <p class="text-gray-400 leading-relaxed">
                                 Full-stack development with a focus on
                                 performance and scalability.
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="column is-4">
-                    <div class="card glass-panel h-100">
-                        <div class="card-content">
-                            <h3 class="title is-4 has-text-warning">
+                <div>
+                    <div
+                        class="glass-panel h-full p-8 rounded-xl border border-[var(--color-glass-border)]"
+                    >
+                        <div>
+                            <h3
+                                class="text-xl font-bold text-[var(--color-warning)] mb-2"
+                            >
                                 3D Modeling
                             </h3>
-                            <p class="subtitle is-6">
+                            <p class="text-gray-400 leading-relaxed">
                                 Creating immersive 3D assets and environments
                                 for web and games.
                             </p>
                         </div>
                     </div>
                 </div>
-                <div class="column is-4">
-                    <div class="card glass-panel h-100">
-                        <div class="card-content">
-                            <h3 class="title is-4 has-text-danger">
+                <div>
+                    <div
+                        class="glass-panel h-full p-8 rounded-xl border border-[var(--color-glass-border)]"
+                    >
+                        <div>
+                            <h3
+                                class="text-xl font-bold text-[var(--color-danger)] mb-2"
+                            >
                                 Creative Tech
                             </h3>
-                            <p class="subtitle is-6">
+                            <p class="text-gray-400 leading-relaxed">
                                 Exploring the intersection of art and technology
                                 through code.
                             </p>
@@ -71,24 +83,26 @@ const featuredProjects = (await getCollection("projects"))
     <!-- Featured Projects -->
     {
         featuredProjects.length > 0 && (
-            <section class="section" id="featured-projects">
-                <div class="container">
-                    <div class="level">
-                        <div class="level-left">
-                            <h2 class="title is-2">Featured Projects</h2>
-                        </div>
-                        <div class="level-right">
-                            <a href="/portfolio" class="button is-text">
-                                View All Projects →
-                            </a>
-                        </div>
+            <section class="py-16" id="featured-projects">
+                <div class="max-w-7xl mx-auto px-4 md:px-8">
+                    <div class="flex items-center justify-between mb-10">
+                        <h2 class="text-3xl font-bold text-white">
+                            Featured Projects
+                        </h2>
+                        <a
+                            href="/portfolio"
+                            class="text-[var(--color-primary)] hover:text-white transition-colors flex items-center group"
+                        >
+                            View All Projects{" "}
+                            <span class="group-hover:translate-x-1 transition-transform ml-1">
+                                →
+                            </span>
+                        </a>
                     </div>
 
-                    <div class="columns is-3by1">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {featuredProjects.map((project) => (
-                            <div class="column is-half-tablet is-half-desktop">
-                                <ProjectCard project={project} />
-                            </div>
+                            <ProjectCard project={project} />
                         ))}
                     </div>
                 </div>
@@ -99,24 +113,26 @@ const featuredProjects = (await getCollection("projects"))
     <!-- Latest Posts -->
     {
         latestPosts.length > 0 && (
-            <section class="section" id="latest-posts">
-                <div class="container">
-                    <div class="level">
-                        <div class="level-left">
-                            <h2 class="title is-2">Latest from the Blog</h2>
-                        </div>
-                        <div class="level-right">
-                            <a href="/blog" class="button is-text">
-                                Read More →
-                            </a>
-                        </div>
+            <section class="py-16" id="latest-posts">
+                <div class="max-w-7xl mx-auto px-4 md:px-8">
+                    <div class="flex items-center justify-between mb-10">
+                        <h2 class="text-3xl font-bold text-white">
+                            Latest from the Blog
+                        </h2>
+                        <a
+                            href="/blog"
+                            class="text-[var(--color-primary)] hover:text-white transition-colors flex items-center group"
+                        >
+                            Read More{" "}
+                            <span class="group-hover:translate-x-1 transition-transform ml-1">
+                                →
+                            </span>
+                        </a>
                     </div>
 
-                    <div class="columns is-multiline">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {latestPosts.map((post) => (
-                            <div class="column is-one-third-desktop is-half-tablet">
-                                <BlogCard post={post} />
-                            </div>
+                            <BlogCard post={post} />
                         ))}
                     </div>
                 </div>

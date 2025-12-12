@@ -9,16 +9,14 @@ const projects = (await getCollection("projects")).sort(
 ---
 
 <Layout title="Portfolio | Software Engineer">
-    <section class="section">
-        <h1 class="title is-1 has-text-centered mb-6">Selected Works</h1>
-        <div class="columns is-multiline">
-            {
-                projects.map((project) => (
-                    <div class="column is-one-third-desktop is-half-tablet">
-                        <ProjectCard project={project} />
-                    </div>
-                ))
-            }
+    <section class="py-16 md:py-24">
+        <h1 class="text-4xl md:text-5xl font-bold text-center mb-12 text-white">
+            Selected Works
+        </h1>
+        <div class="max-w-7xl mx-auto px-4 md:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {projects.map((project) => <ProjectCard project={project} />)}
+            </div>
         </div>
     </section>
 </Layout>

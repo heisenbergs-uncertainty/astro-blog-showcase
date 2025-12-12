@@ -16,44 +16,53 @@ const { Content } = await project.render();
 ---
 
 <Layout title={project.data.title}>
-    <section class="section">
-        <div class="container" style="max-width: 800px;">
-            <a href="/portfolio" class="button is-small is-ghost mb-4"
-                >← Back to Portfolio</a
+    <section class="py-16">
+        <div class="max-w-4xl mx-auto px-4">
+            <a
+                href="/portfolio"
+                class="text-gray-400 hover:text-white mb-6 inline-flex items-center transition-colors group"
+                ><span
+                    class="mr-2 group-hover:-translate-x-1 transition-transform"
+                    >←</span
+                > Back to Portfolio</a
             >
             <article
-                class="content is-medium glass-panel p-6"
-                style="border-radius: 12px;"
+                class="glass-panel p-8 rounded-xl border border-[var(--color-glass-border)]"
             >
                 {
                     project.data.heroImage && (
-                        <Image
-                            width={1020}
-                            height={510}
-                            src={project.data.heroImage}
-                            alt=""
-                            class="mb-4"
-                            style="border-radius: 8px;"
-                        />
+                        <div class="mb-8 rounded-lg overflow-hidden shadow-2xl">
+                            <Image
+                                width={1020}
+                                height={510}
+                                src={project.data.heroImage}
+                                alt=""
+                                class="w-full h-auto object-cover"
+                            />
+                        </div>
                     )
                 }
-                <div class="mb-6">
-                    <h1 class="title is-2 mb-2">{project.data.title}</h1>
-                    <div class="tags mb-4">
+                <div class="mb-8">
+                    <h1
+                        class="text-4xl md:text-5xl font-bold text-white mb-4 leading-tight"
+                    >
+                        {project.data.title}
+                    </h1>
+                    <div class="flex flex-wrap gap-2 mb-6">
                         {
                             project.data.stack.map((tech) => (
-                                <span class="tag is-primary is-light is-rounded">
+                                <span class="px-3 py-1 bg-[var(--color-primary)]/20 text-[var(--color-primary)] rounded-full text-sm font-medium border border-[var(--color-primary)]/20">
                                     {tech}
                                 </span>
                             ))
                         }
                     </div>
-                    <div class="buttons">
+                    <div class="flex flex-wrap gap-4">
                         {
                             project.data.projectUrl && (
                                 <a
                                     href={project.data.projectUrl}
-                                    class="button is-primary is-outlined"
+                                    class="btn bg-[var(--color-primary)] text-white hover:text-white hover:shadow-lg"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
@@ -65,7 +74,7 @@ const { Content } = await project.render();
                             project.data.repoUrl && (
                                 <a
                                     href={project.data.repoUrl}
-                                    class="button is-link is-outlined"
+                                    class="btn border border-white/20 text-white hover:bg-white/10 hover:border-white/40"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
@@ -76,9 +85,11 @@ const { Content } = await project.render();
                     </div>
                 </div>
 
-                <hr style="background-color: rgba(255,255,255,0.1);" />
+                <hr class="border-white/10 my-8" />
 
-                <div class="content">
+                <div
+                    class="prose prose-invert prose-lg max-w-none text-gray-300"
+                >
                     <Content />
                 </div>
             </article>

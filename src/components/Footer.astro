@@ -1,12 +1,21 @@
 ---
 const year = new Date().getFullYear();
 ---
-<footer class="footer" style="background-color: transparent; padding-top: 6rem;">
-    <div class="content has-text-centered">
-        <p>
-            <strong>DevPortfolio</strong> built with <a href="https://astro.build">Astro</a> and <a href="https://bulma.io">Bulma</a>.
+
+<footer class="py-12 text-center text-sm text-gray-500">
+    <div class="max-w-7xl mx-auto px-6">
+        <p class="mb-2">
+            <strong>DevPortfolio</strong> built with <a
+                href="https://astro.build"
+                class="text-white hover:text-[var(--color-primary)] transition-colors"
+                >Astro</a
+            > and <a
+                href="https://tailwindcss.com"
+                class="text-white hover:text-[var(--color-primary)] transition-colors"
+                >Tailwind CSS</a
+            >.
         </p>
-        <p class="is-size-7 has-text-grey">
+        <p>
             &copy; {year} Software Engineer Portfolio. All rights reserved.
         </p>
     </div>

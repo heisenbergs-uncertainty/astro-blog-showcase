@@ -3,43 +3,72 @@
 ---
 
 <nav
-    class="navbar is-fixed-top is-glass"
+    class="fixed top-0 w-full z-50 glass-panel border-b border-[var(--color-glass-border)]"
     role="navigation"
     aria-label="main navigation"
 >
-    <div class="container">
-        <div class="navbar-brand">
+    <div
+        class="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between flex-wrap"
+    >
+        <div class="flex items-center flex-shrink-0 mr-6">
             <a
-                class="navbar-item has-text-weight-bold is-size-4 has-text-primary"
+                class="font-bold text-xl text-[var(--color-primary)] font-mono"
                 href="/"
             >
                 &lt;matthew-reed-holden/&gt;
             </a>
-
-            <a
-                role="button"
-                class="navbar-burger"
-                aria-label="menu"
-                aria-expanded="false"
-                data-target="navbarBasicExample"
-            >
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-            </a>
         </div>
 
-        <div id="navbarBasicExample" class="navbar-menu">
-            <div class="navbar-end">
-                <a href="/" class="navbar-item"> Home </a>
-                <a href="/portfolio" class="navbar-item"> Portfolio </a>
-                <a href="/blog" class="navbar-item"> Blog </a>
-                <div class="navbar-item">
-                    <div class="buttons">
-                        <a href="#contact" class="button is-primary">
-                            <strong>Contact</strong>
-                        </a>
-                    </div>
+        <div class="block lg:hidden">
+            <button
+                class="flex items-center px-3 py-2 border rounded text-gray-200 border-gray-400 hover:text-white hover:border-white navbar-burger"
+                data-target="navbar-menu"
+                aria-label="menu"
+                aria-expanded="false"
+            >
+                <svg
+                    class="fill-current h-3 w-3"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
+                    ><title>Menu</title><path
+                        d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"
+                    ></path></svg
+                >
+            </button>
+        </div>
+
+        <div
+            id="navbar-menu"
+            class="w-full block flex-grow lg:flex lg:items-center lg:w-auto hidden transition-all duration-300"
+        >
+            <div
+                class="text-sm lg:flex-grow lg:flex lg:justify-end items-center gap-4"
+            >
+                <a
+                    href="/"
+                    class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4"
+                >
+                    Home
+                </a>
+                <a
+                    href="/portfolio"
+                    class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4"
+                >
+                    Portfolio
+                </a>
+                <a
+                    href="/blog"
+                    class="block mt-4 lg:inline-block lg:mt-0 text-gray-200 hover:text-white mr-4"
+                >
+                    Blog
+                </a>
+                <div class="block mt-4 lg:inline-block lg:mt-0">
+                    <a
+                        href="#contact"
+                        class="btn bg-[var(--color-primary)] text-white/90 hover:text-white hover:shadow-[0_4px_12px_rgba(130,80,210,0.4)]"
+                    >
+                        <strong>Contact</strong>
+                    </a>
                 </div>
             </div>
         </div>
@@ -49,18 +78,14 @@
 <script>
     // Mobile menu toggle
     document.addEventListener("DOMContentLoaded", () => {
-        const $navbarBurgers = Array.prototype.slice.call(
-            document.querySelectorAll(".navbar-burger"),
-            0,
-        );
+        const burgers = document.querySelectorAll(".navbar-burger");
+        const menu = document.getElementById("navbar-menu");
 
-        $navbarBurgers.forEach((el) => {
-            el.addEventListener("click", () => {
-                const target = el.dataset.target;
-                const $target = document.getElementById(target);
-
-                el.classList.toggle("is-active");
-                if ($target) $target.classList.toggle("is-active");
+        burgers.forEach((burger) => {
+            burger.addEventListener("click", () => {
+                if (menu) {
+                    menu.classList.toggle("hidden");
+                }
             });
         });
     });

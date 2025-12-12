@@ -8,11 +8,17 @@ interface Props {
 const { post } = Astro.props;
 ---
 
-<a href={`/blog/${post.slug}`} class="card-link">
-    <div class="card glass-panel h-100">
-        <div class="card-content">
-            <p class="title is-4 has-text-secondary">{post.data.title}</p>
-            <p class="subtitle is-6 has-text-grey-light">
+<a href={`/blog/${post.slug}`} class="block group h-full">
+    <div
+        class="glass-panel h-full rounded-xl overflow-hidden card-hover p-6 flex flex-col"
+    >
+        <div class="flex-grow">
+            <h3
+                class="text-2xl font-bold text-gray-100 mb-2 group-hover:text-[var(--color-primary)] transition-colors"
+            >
+                {post.data.title}
+            </h3>
+            <p class="text-sm text-gray-400 mb-4">
                 <time datetime={post.data.pubDate.toISOString()}>
                     {
                         post.data.pubDate.toLocaleDateString("en-us", {
@@ -23,35 +29,21 @@ const { post } = Astro.props;
                     }
                 </time>
             </p>
-            <div class="content">
+            <div class="text-gray-300 mb-4 line-clamp-3">
                 {post.data.description}
             </div>
-            {
-                post.data.tags && (
-                    <div class="tags">
-                        {post.data.tags.map((tag) => (
-                            <span class="tag is-info is-light is-rounded">
-                                #{tag}
-                            </span>
-                        ))}
-                    </div>
-                )
-            }
         </div>
+
+        {
+            post.data.tags && (
+                <div class="flex flex-wrap gap-2 mt-4">
+                    {post.data.tags.map((tag) => (
+                        <span class="px-3 py-1 bg-blue-500/10 text-blue-300 border border-blue-500/20 rounded-full text-xs font-medium">
+                            #{tag}
+                        </span>
+                    ))}
+                </div>
+            )
+        }
     </div>
 </a>
-
-<style>
-    .card-link {
-        display: block;
-        height: 100%;
-    }
-    .card-link:hover .card {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
-        border-color: rgba(255, 255, 255, 0.3);
-    }
-    .h-100 {
-        height: 100%;
-    }
-</style>
