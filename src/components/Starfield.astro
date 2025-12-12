@@ -1,0 +1,274 @@
+---
+
+---
+
+<canvas id="starfield" class="starfield"></canvas>
+
+<style>
+    .starfield {
+        position: fixed; /* Global background */
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -1;
+        pointer-events: none;
+        background: radial-gradient(
+            circle at 50% 50%,
+            #1a1a2e 0%,
+            #0f0f1a 100%
+        ); /* Deep space bg */
+    }
+</style>
+
+<script>
+    class Star {
+        x: number;
+        y: number;
+        z: number;
+        baseAlpha: number;
+        size: number;
+        color: string;
+        vx: number;
+        vy: number;
+
+        constructor(width: number, height: number, depth: number) {
+            this.x = (Math.random() - 0.5) * width * 2;
+            this.y = (Math.random() - 0.5) * height * 2;
+            this.z = Math.random() * depth;
+            this.baseAlpha = Math.random() * 0.5 + 0.1;
+            this.size = Math.random() * 2 + 0.5;
+
+            const colors = [
+                "255, 255, 255",
+                "200, 200, 255",
+                "220, 200, 255",
+                "200, 220, 255",
+            ];
+            this.color = colors[Math.floor(Math.random() * colors.length)];
+
+            this.vx = (Math.random() - 0.5) * 0.2;
+            this.vy = (Math.random() - 0.5) * 0.2;
+        }
+
+        update(
+            ctx: CanvasRenderingContext2D,
+            width: number,
+            height: number,
+            cx: number,
+            cy: number,
+            mouseX: number,
+            mouseY: number,
+        ) {
+            this.x += this.vx;
+            this.y += this.vy;
+
+            const k = 128.0 / this.z;
+            const px = this.x * k + cx;
+            const py = this.y * k + cy;
+
+            if (px >= 0 && px <= width && py >= 0 && py <= height) {
+                let currentSize = (1 - this.z / 1000) * this.size;
+                if (currentSize < 0) currentSize = 0;
+
+                const dx = px - mouseX;
+                const dy = py - mouseY;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                const hoverRadius = 200;
+
+                let alpha = this.baseAlpha;
+                let sizeMod = 1;
+                let offsetX = 0;
+                let offsetY = 0;
+
+                if (dist < hoverRadius) {
+                    const intensity = 1 - dist / hoverRadius;
+                    alpha = this.baseAlpha + intensity * 0.8;
+                    sizeMod = 1 + intensity * 0.5;
+
+                    const angle = Math.atan2(dy, dx);
+                    const move = intensity * 10;
+                    offsetX = Math.cos(angle) * move;
+                    offsetY = Math.sin(angle) * move;
+                }
+
+                ctx.fillStyle = `rgba(${this.color}, ${alpha})`;
+                ctx.beginPath();
+                ctx.arc(
+                    px + offsetX,
+                    py + offsetY,
+                    currentSize * sizeMod,
+                    0,
+                    Math.PI * 2,
+                );
+                ctx.fill();
+            }
+        }
+    }
+
+    class ShootingStar {
+        x: number;
+        y: number;
+        vx: number;
+        vy: number;
+        length: number;
+        life: number;
+        maxLife: number;
+        color: string;
+
+        constructor(width: number, height: number) {
+            this.life = 0;
+            this.maxLife = 100 + Math.random() * 50;
+            this.length = 50 + Math.random() * 50;
+            this.color = "255, 255, 255";
+
+            // Spawn decision: Left or Right
+            const startLeft = Math.random() > 0.5;
+
+            if (startLeft) {
+                this.x = 0;
+                this.y = Math.random() * height;
+                const angle = (Math.random() - 0.5) * Math.PI; // -90 to 90
+                const speed = 5 + Math.random() * 10;
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed;
+                this.vx = Math.abs(this.vx);
+            } else {
+                this.x = width;
+                this.y = Math.random() * height;
+                const angle = Math.PI + (Math.random() - 0.5) * Math.PI; // 90 to 270 range roughly
+                const speed = 5 + Math.random() * 10;
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed;
+                this.vx = -Math.abs(this.vx);
+            }
+        }
+
+        update(ctx: CanvasRenderingContext2D, width: number, height: number) {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.life++;
+
+            if (
+                this.x < -100 ||
+                this.x > width + 100 ||
+                this.y < -100 ||
+                this.y > height + 100 ||
+                this.life >= this.maxLife
+            ) {
+                return false; // Dead
+            }
+
+            const opacity = Math.max(0, 1 - this.life / this.maxLife);
+
+            // Draw tail
+            const gradient = ctx.createLinearGradient(
+                this.x,
+                this.y,
+                this.x - this.vx * 10,
+                this.y - this.vy * 10,
+            );
+            gradient.addColorStop(0, `rgba(${this.color}, ${opacity})`);
+            gradient.addColorStop(1, `rgba(${this.color}, 0)`);
+
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(this.x, this.y);
+            ctx.lineTo(this.x - this.vx * 5, this.y - this.vy * 5);
+            ctx.stroke();
+
+            // Head
+            ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, 1.5, 0, Math.PI * 2);
+            ctx.fill();
+
+            return true;
+        }
+    }
+
+    const canvas = document.getElementById("starfield") as HTMLCanvasElement;
+    if (canvas) {
+        const ctx = canvas.getContext("2d");
+        let width = 0;
+        let height = 0;
+        let animationFrameId: number;
+
+        let stars: Star[] = [];
+        let shootingStars: ShootingStar[] = [];
+
+        let mouseX = -1000;
+        let mouseY = -1000;
+
+        // Shooting Star Timer
+        let nextShootingStarTime = 0;
+
+        const init = () => {
+            resize();
+            window.addEventListener("resize", resize);
+            window.addEventListener("mousemove", handleMouseMove);
+
+            // Create stars
+            for (let i = 0; i < 800; i++) {
+                stars.push(new Star(width, height, 1000));
+            }
+
+            scheduleNextShootingStar();
+
+            render(0);
+        };
+
+        const scheduleNextShootingStar = () => {
+            const delay = 15000 + Math.random() * 15000;
+            nextShootingStarTime = performance.now() + delay;
+        };
+
+        const resize = () => {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        };
+
+        const handleMouseMove = (e: MouseEvent) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        };
+
+        const render = (time: number) => {
+            if (!ctx) return;
+
+            ctx.clearRect(0, 0, width, height);
+
+            const cx = width / 2;
+            const cy = height / 2;
+
+            stars.forEach((star) => {
+                star.update(ctx, width, height, cx, cy, mouseX, mouseY);
+            });
+
+            if (time >= nextShootingStarTime) {
+                const count = Math.floor(Math.random() * 3) + 1; // 1 to 3
+                for (let i = 0; i < count; i++) {
+                    shootingStars.push(new ShootingStar(width, height));
+                }
+                scheduleNextShootingStar();
+            }
+
+            shootingStars = shootingStars.filter((p) =>
+                p.update(ctx, width, height),
+            );
+
+            animationFrameId = requestAnimationFrame(render);
+        };
+
+        init();
+
+        document.addEventListener("astro:before-swap", () => {
+            cancelAnimationFrame(animationFrameId);
+            window.removeEventListener("resize", resize);
+            window.removeEventListener("mousemove", handleMouseMove);
+        });
+    }
+</script>

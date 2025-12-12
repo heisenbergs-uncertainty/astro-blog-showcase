@@ -1,0 +1,91 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+    project: CollectionEntry<"projects">;
+}
+
+const { project } = Astro.props;
+---
+
+<div class="card glass-panel h-100">
+    <div class="card-content">
+        <a
+            href={`/projects/${project.slug}`}
+            class="is-block"
+            style="text-decoration: none; color: inherit;"
+        >
+            <div class="mb-4">
+                <p
+                    class="title is-4 has-text-primary group-hover:has-text-link transition-colors"
+                >
+                    {project.data.title}
+                </p>
+                <p class="subtitle is-6 has-text-grey-light">
+                    <time datetime={project.data.pubDate.toISOString()}>
+                        {
+                            project.data.pubDate.toLocaleDateString("en-us", {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                            })
+                        }
+                    </time>
+                </p>
+
+                <div class="content mb-4">
+                    {project.data.description}
+                </div>
+
+                <div class="tags">
+                    {
+                        project.data.stack.map((tech) => (
+                            <span class="tag is-primary is-light is-rounded">
+                                {tech}
+                            </span>
+                        ))
+                    }
+                </div>
+            </div>
+        </a>
+
+        <footer
+            class="card-footer"
+            style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: auto;"
+        >
+            {
+                project.data.projectUrl && (
+                    <a
+                        href={project.data.projectUrl}
+                        class="card-footer-item has-text-white"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Live Demo
+                    </a>
+                )
+            }
+            {
+                project.data.repoUrl && (
+                    <a
+                        href={project.data.repoUrl}
+                        class="card-footer-item has-text-white"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Code
+                    </a>
+                )
+            }
+        </footer>
+    </div>
+</div>
+
+<style>
+    .h-100 {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+</style>

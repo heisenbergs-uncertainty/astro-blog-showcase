@@ -1,0 +1,132 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Hero from "../components/Hero.astro";
+import Starfield from "../components/Starfield.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import BlogCard from "../components/BlogCard.astro";
+import { getCollection } from "astro:content";
+
+// Latest 3 Posts
+const latestPosts = (await getCollection("blog"))
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+    .slice(0, 3);
+
+// Featured Projects (Tagged 'Favorite')
+const featuredProjects = (await getCollection("projects"))
+    .filter((project) => project.data.tags?.includes("Favorite"))
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<Layout title="DevPortfolio | Software Engineer">
+    <Starfield />
+    <Hero />
+
+    <!-- Brief About / Skills Section -->
+    <section class="section">
+        <div class="container">
+            <div class="columns is-multiline is-centered">
+                <div class="column is-4">
+                    <div class="card glass-panel h-100">
+                        <div class="card-content">
+                            <h3 class="title is-4 has-text-primary">
+                                Engineering
+                            </h3>
+                            <p class="subtitle is-6">
+                                Full-stack development with a focus on
+                                performance and scalability.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-4">
+                    <div class="card glass-panel h-100">
+                        <div class="card-content">
+                            <h3 class="title is-4 has-text-warning">
+                                3D Modeling
+                            </h3>
+                            <p class="subtitle is-6">
+                                Creating immersive 3D assets and environments
+                                for web and games.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column is-4">
+                    <div class="card glass-panel h-100">
+                        <div class="card-content">
+                            <h3 class="title is-4 has-text-danger">
+                                Creative Tech
+                            </h3>
+                            <p class="subtitle is-6">
+                                Exploring the intersection of art and technology
+                                through code.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Projects -->
+    {
+        featuredProjects.length > 0 && (
+            <section class="section" id="featured-projects">
+                <div class="container">
+                    <div class="level">
+                        <div class="level-left">
+                            <h2 class="title is-2">Featured Projects</h2>
+                        </div>
+                        <div class="level-right">
+                            <a href="/portfolio" class="button is-text">
+                                View All Projects →
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="columns is-multiline">
+                        {featuredProjects.map((project) => (
+                            <div class="column is-half-tablet is-half-desktop">
+                                <ProjectCard project={project} />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        )
+    }
+
+    <!-- Latest Posts -->
+    {
+        latestPosts.length > 0 && (
+            <section class="section" id="latest-posts">
+                <div class="container">
+                    <div class="level">
+                        <div class="level-left">
+                            <h2 class="title is-2">Latest from the Blog</h2>
+                        </div>
+                        <div class="level-right">
+                            <a href="/blog" class="button is-text">
+                                Read More →
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="columns is-multiline">
+                        {latestPosts.map((post) => (
+                            <div class="column is-one-third-desktop is-half-tablet">
+                                <BlogCard post={post} />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        )
+    }
+</Layout>
+
+<style>
+    .h-100 {
+        height: 100%;
+    }
+</style>

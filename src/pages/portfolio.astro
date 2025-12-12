@@ -1,0 +1,24 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { getCollection } from "astro:content";
+
+const projects = (await getCollection("projects")).sort(
+    (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<Layout title="Portfolio | Software Engineer">
+    <section class="section">
+        <h1 class="title is-1 has-text-centered mb-6">Selected Works</h1>
+        <div class="columns is-multiline">
+            {
+                projects.map((project) => (
+                    <div class="column is-one-third-desktop is-half-tablet">
+                        <ProjectCard project={project} />
+                    </div>
+                ))
+            }
+        </div>
+    </section>
+</Layout>

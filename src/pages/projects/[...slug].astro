@@ -1,0 +1,86 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+    const projects = await getCollection("projects");
+    return projects.map((project) => ({
+        params: { slug: project.slug },
+        props: { project },
+    }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+---
+
+<Layout title={project.data.title}>
+    <section class="section">
+        <div class="container" style="max-width: 800px;">
+            <a href="/portfolio" class="button is-small is-ghost mb-4"
+                >← Back to Portfolio</a
+            >
+            <article
+                class="content is-medium glass-panel p-6"
+                style="border-radius: 12px;"
+            >
+                {
+                    project.data.heroImage && (
+                        <img
+                            width={1020}
+                            height={510}
+                            src={project.data.heroImage}
+                            alt=""
+                            class="mb-4"
+                            style="border-radius: 8px;"
+                        />
+                    )
+                }
+                <div class="mb-6">
+                    <h1 class="title is-2 mb-2">{project.data.title}</h1>
+                    <div class="tags mb-4">
+                        {
+                            project.data.stack.map((tech) => (
+                                <span class="tag is-primary is-light is-rounded">
+                                    {tech}
+                                </span>
+                            ))
+                        }
+                    </div>
+                    <div class="buttons">
+                        {
+                            project.data.projectUrl && (
+                                <a
+                                    href={project.data.projectUrl}
+                                    class="button is-primary is-outlined"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Live Demo
+                                </a>
+                            )
+                        }
+                        {
+                            project.data.repoUrl && (
+                                <a
+                                    href={project.data.repoUrl}
+                                    class="button is-link is-outlined"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Code
+                                </a>
+                            )
+                        }
+                    </div>
+                </div>
+
+                <hr style="background-color: rgba(255,255,255,0.1);" />
+
+                <div class="content">
+                    <Content />
+                </div>
+            </article>
+        </div>
+    </section>
+</Layout>
