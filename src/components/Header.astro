@@ -1,5 +1,6 @@
 ---
-
+import { GithubLogoIcon } from "@phosphor-icons/react";
+import { LinkedinLogoIcon } from "@phosphor-icons/react/dist/ssr/LinkedinLogo";
 ---
 
 <nav
@@ -62,6 +63,28 @@
                 >
                     Blog
                 </a>
+
+                <!-- Social Icons -->
+                <div class="flex items-center gap-4 mt-4 lg:mt-0 mr-4">
+                    <a
+                        href="https://github.com/heisenbergs-uncertainty"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-gray-200 hover:text-white transition-colors"
+                        aria-label="GitHub"
+                    >
+                        <GithubLogoIcon size={28} weight="fill" />
+                    </a>
+                    <a
+                        href="https://www.linkedin.com/in/matthew-holden-9b8244197/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-gray-200 hover:text-white transition-colors"
+                        aria-label="LinkedIn"
+                    >
+                        <LinkedinLogoIcon size={28} weight="fill" />
+                    </a>
+                </div>
                 <div class="block mt-4 lg:inline-block lg:mt-0">
                     <a
                         href="#contact"
