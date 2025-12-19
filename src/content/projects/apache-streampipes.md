@@ -2,7 +2,7 @@
 title: "Apache StreamPipes Contributions"
 description: "Open source contributions to the Apache StreamPipes IoT analytics platform, including new processors and enhanced data sinks."
 pubDate: "2025-06-05"
-tags: ["Open Source", "Java", "IoT", "Apache"]
+tags: ["Favorite", "Open Source", "Java", "IoT", "Apache"]
 stack: ["Java", "Apache StreamPipes", "Angular"]
 heroImage: "../../assets/projects/sp-logo-color.png"
 repoUrl: "https://github.com/apache/streampipes"
